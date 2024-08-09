@@ -686,8 +686,15 @@ function prepareCluster(cluster, context, isExtension = false) {
         bit: feature.$.bit,
         defaultValue: feature.$.default,
         description: feature.$.summary,
-        conformance: feature.$.conformance,
       }
+
+      if (feature.mandatoryConform && feature.mandatoryConform[0] == '') {
+        f.conformance = 'M'
+      } else if (feature.optionalConform && feature.mandatoryConform[0] == '') {
+        f.conformance = 'O'
+      }
+
+      console.log('Feature in prepareCluster:', f)
 
       ret.features.push(f)
     })
@@ -1629,7 +1636,8 @@ function prepareDeviceType(deviceType) {
           }
           if ('features' in include) {
             include.features[0].feature.forEach((f) => {
-              // Only adding madatory features for now
+              console.log('feature:', JSON.stringify(f))
+              // Only adding mandatory features for now
               if (f.mandatoryConform && f.mandatoryConform[0] === '') {
                 features.push(f.$.name)
               }

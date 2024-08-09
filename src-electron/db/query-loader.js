@@ -709,6 +709,7 @@ async function insertClusters(db, packageId, data) {
         }
 
         if ('features' in data[i]) {
+          console.log(data[i].features)
           pFeatures = insertFeatures(db, packageId, data[i].features, lastId)
         }
       }
